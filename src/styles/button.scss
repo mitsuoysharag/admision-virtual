@@ -1,0 +1,45 @@
+/* Mixin */
+@mixin button-color($color, $color-hover, $color-font){
+  color: $color-font;
+  background: $color;
+  &:hover {
+    background:  $color-hover;
+  }
+}
+
+.button {
+  padding: 9px 18px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  text-decoration: none;
+  transition: all .3s;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+  }
+  @include button-color(#fff, #e0e0e0, #646464);
+
+  &--red {
+    @include button-color(#ff7575, #df4b4b, #fff);
+  }
+  &--green {
+    @include button-color(#80d15f, #64b844, #fff);
+  }
+  &--blue {
+    @include button-color(#0070c4, #005ba1, #fff);
+  }
+  &--yellow {
+    @include button-color(#fcd658, #e9b819, #fff);
+  }
+
+  &--icon {
+    flex-shrink: 0;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+}

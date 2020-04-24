@@ -1,0 +1,16 @@
+.card {
+  padding: 10px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  // border: 1px solid rgba(0,0,0,.0625);
+
+  &__title {
+    margin: 0 0 10px;
+  }
+  &__actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
