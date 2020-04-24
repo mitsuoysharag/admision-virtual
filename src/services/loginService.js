@@ -6,4 +6,10 @@ function login(dni, inscripcion) {
   })
 }
 
-export { login }
+function loginAdmin(usuario, contraseña) {
+  return fetchPost('loginAdmin', {
+    usuario, contraseña
+  })
+}
+
+export { login, loginAdmin }

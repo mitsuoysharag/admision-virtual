@@ -9,10 +9,10 @@
           <i class="fa fa-times" @click="error = ''"></i>
         </div>
         <div class="login__body">
-          <span>DNI:</span>
-          <InputText v-model="dni" type="text" />
-          <span>Cód. de Inscripción:</span>
-          <InputText v-model="inscripcion" type="text" />
+          <span>Usuario:</span>
+          <InputText v-model="user" type="text" />
+          <span>Contraseña:</span>
+          <InputText v-model="pass" type="password" />
         </div>
         <div class="login__actions card__actions">
           <button class="button button--blue">Ingresar</button>
@@ -28,14 +28,14 @@
 import Loading from "@/components/Loading";
 import InputText from "@/components/InputText";
 
-import { login } from "@/services/loginService";
+import { loginAdmin } from "@/services/loginService";
 import { setSession } from "@/services/session";
 import { redirect } from "@/services/router";
 
 export default {
   data: () => ({
-    dni: "76530512",
-    inscripcion: "aaa",
+    user: "admin",
+    pass: "123",
     //
     error: "",
     loading: false
@@ -45,20 +45,20 @@ export default {
       this.error = "";
       if (this.validate()) {
         this.loading = true;
-        let { token, error } = await login(this.dni, this.inscripcion);
+        let { token, error } = await loginAdmin(this.user, this.pass);
         this.loading = false;
         if (error) {
           this.error = error;
         } else {
-          setSession(token, 1);
-          redirect("panel");
+          setSession(token, 0);
+          redirect("admin");
         }
       } else {
         this.error = "Ingresa todos los datos.";
       }
     },
     validate() {
-      return this.dni && this.inscripcion;
+      return this.user && this.pass;
     }
   },
   components: {

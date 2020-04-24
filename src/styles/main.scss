@@ -13,8 +13,30 @@ body {
   padding: 0;
   font-family: 'Quicksand', Arial, sans-serif;
 }
-input {
+input, textarea {
+  font-size: 1rem;
   font-family: 'Quicksand', Arial, sans-serif;
+}
+textarea {
+  resize: vertical;
+  width: 100%;
+}
+// 
+::-webkit-scrollbar {
+  -webkit-border-radius: 5px;
+  background-color: transparent;
+  border-radius: 5px;
+  height: 10px;
+  transition: background-color .2s linear;
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  background: #aaa;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: background-color .2s linear;
 }
 
 // Small devices (landscape phones, 576px and up)

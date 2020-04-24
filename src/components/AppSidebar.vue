@@ -23,8 +23,8 @@
       </aside>
       <!-- CONTENT -->
       <div class="content">
-        <div v-for="(link, l_idx) in links" :key="l_idx">
-          <div v-show="idx==l_idx">
+        <div style="height: 100%" v-for="(link, l_idx) in links" :key="l_idx">
+          <div style="height: 100%"  v-show="idx==l_idx">
             <slot :name="l_idx"></slot>
           </div>
         </div>
@@ -49,13 +49,14 @@ export default {
 
 <style lang='scss' scoped>
 .app {
+  overflow-y: hidden;
   display: flex;
 }
 aside {
   flex-shrink: 0;
   padding: 20px 0;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+  z-index: 90;
   nav {
     ul {
       padding: 0;
@@ -96,6 +97,7 @@ aside {
   }
 }
 .content {
+  overflow-y: auto;
   position: relative;
   flex-grow: 1;
   // background: #f2f7fb;
