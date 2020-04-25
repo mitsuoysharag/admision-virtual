@@ -5,7 +5,7 @@
       <div class="row no-gutters">
         <div class="col-12 col-lg-6" style="padding: 20px">
           <!-- Exam -->
-          <section class="exam card">
+          <section class="exam card" v-if="examen">
             <div class="exam__title">Examen</div>
             <div class="exam__content">
               <!--  -->
@@ -30,6 +30,9 @@
               <button class="button button--blue">Ingresar</button>
             </div>
           </section>
+          <section v-else class="no-exam card">
+            <span>Aún no se ha registrado un examen.</span>
+          </section>
         </div>
       </div>
     </div>
@@ -44,13 +47,15 @@ import { redirect } from "@/services/router";
 
 export default {
   data: () => ({
-    examen: {},
+    examen: null,
     loading: true
   }),
   async mounted() {
     this.examen = await obtenerExamenDatos();
-    this.examen.tiempo_inicio = this.dateFormat(this.examen.tiempo_inicio);
-    this.examen.tiempo_fin = this.dateFormat(this.examen.tiempo_fin);
+    if (this.examen) {
+      this.examen.tiempo_inicio = this.dateFormat(this.examen.tiempo_inicio);
+      this.examen.tiempo_fin = this.dateFormat(this.examen.tiempo_fin);
+    }
     this.loading = false;
   },
   methods: {
@@ -109,5 +114,9 @@ export default {
   &__actions {
     margin-top: 24px;
   }
+}
+.no-exam {
+  padding: 20px;
+  text-align: center;
 }
 </style>

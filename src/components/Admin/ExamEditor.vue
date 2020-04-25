@@ -1,6 +1,10 @@
 <template>
   <div style="height: 100%; display: flex; flex-direction: column">
     <Loading :active="loading" />
+    <div v-show="error" class="error">
+      <span>{{error}}</span>
+      <i class="fa fa-times" style="cursor: pointer" @click="error = ''"></i>
+    </div>
     <div class="menu">
       <h2 class="menu__title">Editar Examen</h2>
       <button class="button button--blue" @click="guardar()">Guardar</button>
@@ -43,14 +47,21 @@ import {
 export default {
   data: () => ({
     examen: {},
+    //
+    error: "",
     loading: true
   }),
   async mounted() {
-    this.examen = await obtenerExamenAdmin();
+    this.examen = (await obtenerExamenAdmin()) || {};
+    // this.examen.tiempo_inicio =
+    //   this.examen.tiempo_inicio || new Date().toLocaleDateString();
+    // this.examen.tiempo_fin =
+    //   this.examen.tiempo_inicio || new Date().toLocaleDateString();
+
     let contenido = this.examen.contenido || [];
     for (let i = 0; contenido.length < 5; i++) {
       contenido.push({
-        pregunta: "Pregunta",
+        pregunta: `Pregunta ${i + 1}`,
         alternativas: [
           "Alternativa 1",
           "Alternativa 2",
@@ -65,9 +76,17 @@ export default {
   },
   methods: {
     async guardar() {
-      this.loading = true;
-      await guardarExamenAdmin(this.examen);
-      this.loading = false;
+      this.error = "";
+      if (this.validate()) {
+        this.loading = true;
+        await guardarExamenAdmin(this.examen);
+        this.loading = false;
+      } else {
+        this.error = "Datos incompletos.";
+      }
+    },
+    validate() {
+      return this.examen.tiempo_inicio && this.examen.tiempo_fin;
     }
   },
   components: {
@@ -78,13 +97,13 @@ export default {
 
 <style lang='scss' scoped>
 .menu {
-  padding: 10px;
+  padding: 10px 20px;
   //
   display: flex;
   justify-content: space-between;
   align-items: center;
   &__title {
-    margin: 0 10px;
+    margin: 0;
   }
 }
 .exam {
@@ -117,5 +136,16 @@ export default {
     margin-bottom: 10px;
     display: flex;
   }
+}
+.error {
+  margin-bottom: 0;
+  padding: 10px 14px;
+  background: #ffb067;
+  color: #fff;
+  font-weight: bold;
+  //
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>
