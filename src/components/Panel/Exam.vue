@@ -59,9 +59,16 @@ export default {
     },
     dateFormat(date) {
       date = new Date(date);
-      // date = `${date.getDate()}/${date.getMonth() +
-      //   1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+      let day = date.getDate();
+      let month = this.format_two_digits(date.getMonth() + 1);
+      let year = date.getFullYear();
+      let hours = this.format_two_digits(date.getHours());
+      let minutes = this.format_two_digits(date.getMinutes());
+      date = `${day}-${month}-${year} ${hours}:${minutes}`;
       return date;
+    },
+    format_two_digits(n) {
+      return n < 10 ? "0" + n : n;
     }
   },
   components: {
