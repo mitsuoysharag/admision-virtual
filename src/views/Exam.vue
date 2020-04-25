@@ -1,8 +1,7 @@
 <template>
   <div class="full">
     <Header />
-    <p>Mensaje: {{msg}}</p>
-    <div class="exam full__content">
+    <div v-show="!error" class="exam full__content">
       <Loading :active="loading" />
       <div class="container">
         <section
@@ -31,6 +30,10 @@
         </div>
       </div>
     </div>
+    <div class="error card" v-show="error">
+      <p>{{error}}</p>
+      <button class="button button--blue" @click="redirect()">Volver</button>
+    </div>
   </div>
 </template>
 
@@ -43,12 +46,13 @@ import {
   obtenerRespuestas,
   ingresarRespuestas
 } from "@/services/puntajeService";
+import { redirect } from "@/services/router";
 
 export default {
   data: () => ({
     examen: {},
     question_idx: 0,
-    msg: "",
+    error: "",
     //
     loading: true
   }),
@@ -56,9 +60,8 @@ export default {
     let respuestas = await obtenerRespuestas();
     this.examen = await obtenerExamen();
     if (this.examen.error) {
-      this.msg = this.examen.error;
+      this.error = this.examen.error;
     } else {
-      this.msg = "Dentro de tiempo.";
       this.examen.contenido.forEach((c, idx) => {
         c.seleccionado = respuestas[idx];
       });
@@ -75,9 +78,16 @@ export default {
     async save() {
       this.loading = true;
       let respuestas = this.examen.contenido.map(c => c.seleccionado);
-      await ingresarRespuestas(respuestas);
+      let response = await ingresarRespuestas(respuestas);
+      if (response.error) {
+        this.error = response.error;
+      }
       this.loading = false;
     },
+    redirect() {
+      redirect("panel");
+    },
+    //
     dateFormat(date) {
       date = new Date(date);
       // date = `${date.getDate()}/${date.getMonth() +
@@ -119,5 +129,12 @@ export default {
   max-width: 800px;
   margin: 20px auto;
   justify-content: space-between;
+}
+.error {
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 20px;
+  font-size: 1.2rem;
+  text-align: center;
 }
 </style>
