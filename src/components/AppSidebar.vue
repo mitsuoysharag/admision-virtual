@@ -23,10 +23,8 @@
       </aside>
       <!-- CONTENT -->
       <div class="content">
-        <div style="height: 100%" v-for="(link, l_idx) in links" :key="l_idx">
-          <div style="height: 100%"  v-show="idx==l_idx">
-            <slot :name="l_idx"></slot>
-          </div>
+        <div style="height: 100%" v-for="(link, l_idx) in links" :key="l_idx" v-show="idx==l_idx">
+          <slot :name="l_idx"></slot>
         </div>
       </div>
     </div>

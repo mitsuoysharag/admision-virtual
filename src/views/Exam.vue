@@ -1,33 +1,34 @@
 <template>
   <div class="full">
     <Header />
+    <p>Mensaje: {{msg}}</p>
     <div class="exam full__content">
       <Loading :active="loading" />
       <div class="container">
-        <section class="question card">
-          <p class="question__menu">Pregunta {{question_idx + 1}}</p>
+        <section
+          class="question card"
+          v-for="(question, q_idx) in examen.contenido"
+          :key="q_idx"
+          v-show="q_idx === question_idx"
+        >
+          <p class="question__menu">Pregunta {{q_idx + 1}}</p>
           <p class="question__question">{{question.pregunta}}</p>
           <div class="question__alternatives">
             <label
               class="question__alternative"
               v-for="(alternative, a_idx) in question.alternativas"
-              :key="alternative"
+              :key="a_idx"
             >
-              <input
-                type="radio"
-                :name="question_idx"
-                :value="a_idx"
-                v-model="question.seleccionado"
-              />
+              <input type="radio" :name="q_idx" :value="a_idx" v-model="question.seleccionado" />
               <span>{{alternative}}</span>
             </label>
           </div>
-          <div class="question__actions card__actions">
-            <button class="button button--blue" @click="go(-1)">Anterior</button>
-            <button class="button button--green" @click="save()">Guardar</button>
-            <button class="button button--blue" @click="go(+1)">Siguiente</button>
-          </div>
         </section>
+        <div class="actions card__actions">
+          <button class="button button--blue" @click="go(-1)">Anterior</button>
+          <button class="button button--green" @click="save()">Guardar</button>
+          <button class="button button--blue" @click="go(+1)">Siguiente</button>
+        </div>
       </div>
     </div>
   </div>
@@ -47,20 +48,21 @@ export default {
   data: () => ({
     examen: {},
     question_idx: 0,
+    msg: "",
+    //
     loading: true
   }),
-  computed: {
-    question() {
-      let contenido = this.examen.contenido || [];
-      return contenido[this.question_idx] || {};
-    }
-  },
   async mounted() {
     let respuestas = await obtenerRespuestas();
     this.examen = await obtenerExamen();
-    this.examen.contenido.forEach((c, idx) => {
-      c.seleccionado = respuestas[idx];
-    });
+    if (this.examen.error) {
+      this.msg = this.examen.error;
+    } else {
+      this.msg = "Dentro de tiempo.";
+      this.examen.contenido.forEach((c, idx) => {
+        c.seleccionado = respuestas[idx];
+      });
+    }
     this.loading = false;
   },
   methods: {
@@ -75,6 +77,12 @@ export default {
       let respuestas = this.examen.contenido.map(c => c.seleccionado);
       await ingresarRespuestas(respuestas);
       this.loading = false;
+    },
+    dateFormat(date) {
+      date = new Date(date);
+      // date = `${date.getDate()}/${date.getMonth() +
+      //   1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+      return date;
     }
   },
   components: {
@@ -106,9 +114,10 @@ export default {
     display: flex;
     cursor: pointer;
   }
-  &__actions {
-    margin-top: 28px;
-    justify-content: space-between;
-  }
+}
+.actions {
+  max-width: 800px;
+  margin: 20px auto;
+  justify-content: space-between;
 }
 </style>

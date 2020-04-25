@@ -49,10 +49,8 @@ export default {
   }),
   async mounted() {
     this.examen = await obtenerExamenDatos();
-    this.examen.tiempo_inicio = this.dateFormat(
-      this.examen.tiempo_inicio.$date
-    );
-    this.examen.tiempo_fin = this.dateFormat(this.examen.tiempo_fin.$date);
+    this.examen.tiempo_inicio = this.dateFormat(this.examen.tiempo_inicio);
+    this.examen.tiempo_fin = this.dateFormat(this.examen.tiempo_fin);
     this.loading = false;
   },
   methods: {
@@ -61,8 +59,8 @@ export default {
     },
     dateFormat(date) {
       date = new Date(date);
-      date = `${date.getDate()}/${date.getMonth() +
-        1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+      // date = `${date.getDate()}/${date.getMonth() +
+      //   1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
       return date;
     }
   },
