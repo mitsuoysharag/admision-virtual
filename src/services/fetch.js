@@ -1,7 +1,7 @@
 import { getSession } from './session'
 
-// const service = 'http://localhost:5000'
-const service = 'https://admision-virtual-service.herokuapp.com'
+const service = 'http://localhost:5000'
+// const service = 'https://admision-virtual-service.herokuapp.com'
 
 function getHeaders() {
   return {

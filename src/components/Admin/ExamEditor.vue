@@ -59,7 +59,7 @@ export default {
     //   this.examen.tiempo_inicio || new Date().toLocaleDateString();
 
     let contenido = this.examen.contenido || [];
-    for (let i = 0; contenido.length < 5; i++) {
+    for (let i = 0; contenido.length < 40; i++) {
       contenido.push({
         pregunta: `Pregunta ${i + 1}`,
         alternativas: [

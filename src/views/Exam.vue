@@ -3,14 +3,21 @@
     <Header />
     <div v-show="!error" class="exam full__content">
       <Loading :active="loading" />
-      <div class="container">
+      <!-- Question -->
+      <div class="container" style="max-width: 800px; padding: 20px 0" v-if="examen.contenido && !show_end">
+        <select v-model="question_idx">
+          <option
+            v-for="(question, q_idx) in examen.contenido"
+            :key="q_idx"
+            :value="q_idx"
+          >Pregunta {{q_idx+1}}</option>
+        </select>
         <section
           class="question card"
           v-for="(question, q_idx) in examen.contenido"
           :key="q_idx"
           v-show="q_idx === question_idx"
         >
-          <p class="question__menu">Pregunta {{q_idx + 1}}</p>
           <p class="question__question">{{question.pregunta}}</p>
           <div class="question__alternatives">
             <label
@@ -24,10 +31,31 @@
           </div>
         </section>
         <div class="actions card__actions">
-          <button class="button button--blue" @click="go(-1)">Anterior</button>
-          <button class="button button--green" @click="save()">Guardar</button>
-          <button class="button button--blue" @click="go(+1)">Siguiente</button>
+          <button
+            class="button button--blue"
+            v-show="question_idx > 0"
+            @click="go(-1); show_end = false"
+          >Anterior</button>
+          <div></div>
+          <button
+            class="button button--blue"
+            v-show="question_idx < this.examen.contenido.length - 1"
+            @click="go(+1)"
+          >Siguiente</button>
+          <button
+            class="button button--green"
+            v-show="question_idx === this.examen.contenido.length - 1 && !show_end"
+            @click="end()"
+          >Finalizar</button>
         </div>
+      </div>
+      <!-- End -->
+      <div v-show="show_end" class="container">
+        <section class="end card">
+          <p>Has finalizado el examen.</p>
+          <button class="button button--blue" style="margin-right: 10px" @click="show_end = false;">Volver</button>
+          <button class="button button--blue" @click="redirect()">Salir</button>
+        </section>
       </div>
     </div>
     <div class="error card" v-show="error">
@@ -54,7 +82,8 @@ export default {
     question_idx: 0,
     error: "",
     //
-    loading: true
+    loading: true,
+    show_end: false
   }),
   async mounted() {
     let respuestas = await obtenerRespuestas();
@@ -68,8 +97,13 @@ export default {
     }
     this.loading = false;
   },
+  watch: {
+    async question_idx() {
+      await this.save();
+    }
+  },
   methods: {
-    go(dir) {
+    async go(dir) {
       this.question_idx = Math.min(
         Math.max(0, this.question_idx + dir),
         this.examen.contenido.length - 1
@@ -84,6 +118,11 @@ export default {
       }
       this.loading = false;
     },
+    async end() {
+      await this.save();
+      this.show_end = true;
+    },
+    //
     redirect() {
       redirect("panel");
     },
@@ -106,14 +145,14 @@ export default {
 .exam {
   position: relative;
 }
-.question {
+.select {
   max-width: 800px;
   margin: 20px auto;
+  padding: 0;
+}
+.question {
+  margin: 20px auto;
   padding: 20px;
-  &__menu {
-    margin: 0 0 20px 0;
-    font-weight: bold;
-  }
   &__question {
     margin: 0 0 20px 0;
   }
@@ -131,6 +170,13 @@ export default {
   justify-content: space-between;
 }
 .error {
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 20px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+.end {
   max-width: 300px;
   margin: 20px auto;
   padding: 20px;
