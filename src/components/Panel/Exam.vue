@@ -4,15 +4,10 @@
     <div class="container" style="padding: 0">
       <div class="row no-gutters">
         <div class="col-12 col-lg-6" style="padding: 20px">
-          <!-- Exam -->
+          <!-- EXAM -->
           <section class="exam card" v-if="examen">
             <div class="exam__title">Examen</div>
             <div class="exam__content">
-              <!--  -->
-              <i class="fa fa-university"></i>
-              <div class="exam__item">Unid. Postgrado:</div>
-              <div class="exam__value" v-if="examen.upg">{{examen.upg.nombre}}</div>
-              <div class="exam__value" v-else></div>
               <!--  -->
               <i class="fa fa-question"></i>
               <div class="exam__item">N° Preguntas:</div>
@@ -30,6 +25,7 @@
               <button class="button button--blue">Ingresar</button>
             </div>
           </section>
+          <!-- NO EXAM -->
           <section v-else class="no-exam card">
             <span>Aún no se ha registrado un examen.</span>
           </section>

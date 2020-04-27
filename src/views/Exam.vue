@@ -1,17 +1,18 @@
 <template>
   <div class="full">
     <Header />
-    <div v-show="!error" class="exam full__content">
-      <Loading :active="loading" />
-      <!-- Question -->
-      <div class="container" style="max-width: 800px; padding: 20px 0" v-if="examen.contenido && !show_end">
-        <select v-model="question_idx">
+    <Loading :active="loading" />
+    <div v-if="examen.contenido && !error" class="container">
+      <!-- EXAM -->
+      <div v-show="!show_end" class="exam">
+        <select class="exam__select" v-model="question_idx">
           <option
             v-for="(question, q_idx) in examen.contenido"
             :key="q_idx"
             :value="q_idx"
           >Pregunta {{q_idx+1}}</option>
         </select>
+        <!-- QUESTION -->
         <section
           class="question card"
           v-for="(question, q_idx) in examen.contenido"
@@ -30,7 +31,7 @@
             </label>
           </div>
         </section>
-        <div class="actions card__actions">
+        <div class="exam__actions">
           <button
             class="button button--blue"
             v-show="question_idx > 0"
@@ -50,24 +51,30 @@
         </div>
       </div>
       <!-- End -->
-      <div v-show="show_end" class="container">
-        <section class="end card">
-          <p>Has finalizado el examen.</p>
-          <button class="button button--blue" style="margin-right: 10px" @click="show_end = false;">Volver</button>
-          <button class="button button--blue" @click="redirect()">Salir</button>
-        </section>
-      </div>
+      <section v-show="show_end" class="exam__end card">
+        <p>Has finalizado el examen.</p>
+        <button
+          class="button button--blue"
+          style="margin-right: 10px"
+          @click="show_end = false;"
+        >Volver</button>
+        <button class="button button--blue" @click="redirect()">Salir</button>
+      </section>
     </div>
-    <div class="error card" v-show="error">
+    <!-- ERROR -->
+    <section class="error card" v-show="error">
       <p>{{error}}</p>
-      <button class="button button--blue" @click="redirect()">Volver</button>
-    </div>
+      <button class="button button--blue" @click="redirect()">Salir</button>
+    </section>
+    <!-- ANSWERS -->
+    <Answers v-if="show_end || error" />
   </div>
 </template>
 
 <script>
 import Loading from "@/components/Loading";
 import Header from "@/components/Header";
+import Answers from "@/components/Answers";
 
 import { obtenerExamen } from "@/services/examenService";
 import {
@@ -136,19 +143,32 @@ export default {
   },
   components: {
     Loading,
-    Header
+    Header,
+    Answers
   }
 };
 </script>
 
 <style lang='scss' scoped>
 .exam {
-  position: relative;
-}
-.select {
   max-width: 800px;
-  margin: 20px auto;
-  padding: 0;
+  margin: 0 auto;
+  padding: 20px 0;
+  &__select {
+  }
+  &__actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__end {
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    font-size: 1.2rem;
+    text-align: center;
+  }
 }
 .question {
   margin: 20px auto;
@@ -164,19 +184,8 @@ export default {
     cursor: pointer;
   }
 }
-.actions {
-  max-width: 800px;
-  margin: 20px auto;
-  justify-content: space-between;
-}
 .error {
-  max-width: 300px;
-  margin: 20px auto;
-  padding: 20px;
-  font-size: 1.2rem;
-  text-align: center;
-}
-.end {
+  width: 100%;
   max-width: 300px;
   margin: 20px auto;
   padding: 20px;
