@@ -2,7 +2,7 @@
   <div class="full">
     <Header />
     <Loading :active="loading" />
-    <div v-if="examen.contenido && !error" class="container">
+    <div v-if="examen.contenido && !error_type" class="container">
       <!-- EXAM -->
       <div v-show="!show_end" class="exam">
         <select class="exam__select" v-model="question_idx">
@@ -20,15 +20,23 @@
           v-show="q_idx === question_idx"
         >
           <p class="question__question">{{question.pregunta}}</p>
+          <hr />
           <div class="question__alternatives">
             <label
               class="question__alternative"
               v-for="(alternative, a_idx) in question.alternativas"
               :key="a_idx"
             >
-              <input type="radio" :name="q_idx" :value="a_idx" v-model="question.seleccionado" />
+              <input
+                type="radio"
+                :name="q_idx"
+                :value="a_idx"
+                v-model="question.seleccionado"
+                style="margin: 5px 10px 0 0"
+              />
               <span>{{alternative}}</span>
             </label>
+            <button class="question__action button" @click="clean(question)">Limpiar</button>
           </div>
         </section>
         <div class="exam__actions">
@@ -62,12 +70,12 @@
       </section>
     </div>
     <!-- ERROR -->
-    <section class="error card" v-show="error">
+    <section class="error card" v-show="error_type">
       <p>{{error}}</p>
       <button class="button button--blue" @click="redirect()">Salir</button>
     </section>
     <!-- ANSWERS -->
-    <Answers v-if="show_end || error" />
+    <Answers v-if="show_end || (error_type && error_type != 'nostart')" />
   </div>
 </template>
 
@@ -87,7 +95,7 @@ export default {
   data: () => ({
     examen: {},
     question_idx: 0,
-    error: "",
+    error_type: "",
     //
     loading: true,
     show_end: false
@@ -96,7 +104,7 @@ export default {
     let respuestas = await obtenerRespuestas();
     this.examen = await obtenerExamen();
     if (this.examen.error) {
-      this.error = this.examen.error;
+      this.error_type = this.examen.error;
     } else {
       this.examen.contenido.forEach((c, idx) => {
         c.seleccionado = respuestas[idx];
@@ -109,6 +117,15 @@ export default {
       await this.save();
     }
   },
+  computed: {
+    error() {
+      let errors = {
+        nostart: "Aún no inicia el examen.",
+        end: "Ha finalizado el examen."
+      };
+      return errors[this.error_type];
+    }
+  },
   methods: {
     async go(dir) {
       this.question_idx = Math.min(
@@ -119,15 +136,19 @@ export default {
     async save() {
       this.loading = true;
       let respuestas = this.examen.contenido.map(c => c.seleccionado);
-      let response = await ingresarRespuestas(respuestas);
-      if (response.error) {
-        this.error = response.error;
+      let { error } = await ingresarRespuestas(respuestas);
+      if (error) {
+        this.error_type = error;
       }
       this.loading = false;
     },
     async end() {
       await this.save();
       this.show_end = true;
+    },
+    clean(question) {
+      question.seleccionado = null;
+      this.examen.contenido.splice();
     },
     //
     redirect() {
@@ -154,8 +175,8 @@ export default {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px 0;
-  &__select {
-  }
+  // &__select {
+  // }
   &__actions {
     margin-top: 20px;
     display: flex;
@@ -176,12 +197,23 @@ export default {
   &__question {
     margin: 0 0 20px 0;
   }
+  hr {
+    border: 0;
+    border-top: 1px solid #dbdbdb;
+  }
   &__alternatives {
+    margin-top: 20px;
   }
   &__alternative {
     margin-bottom: 10px;
+    // color: #3a3a3a;
     display: flex;
     cursor: pointer;
+  }
+  &__action {
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
   }
 }
 .error {

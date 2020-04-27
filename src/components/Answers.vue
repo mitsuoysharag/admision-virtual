@@ -9,7 +9,7 @@
         <span
           class="answers__answer"
           :key="`answer-${idx}`"
-        >{{respuesta != null? respuesta + 1: '---'}}</span>
+        >{{respuesta != null? toOption(respuesta): '---'}}</span>
       </template>
     </div>
   </section>
@@ -26,6 +26,11 @@ export default {
   async mounted() {
     this.respuestas = await obtenerRespuestas();
     this.loading = false;
+  },
+  methods: {
+    toOption(answer) {
+      return ["a", "b", "c", "d"][answer];
+    }
   }
 };
 </script>
