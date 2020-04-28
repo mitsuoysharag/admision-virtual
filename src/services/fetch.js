@@ -13,7 +13,12 @@ function getHeaders() {
 function fetchGet(name) {
   let headers = getHeaders()
   return fetch(`${service}/${name}`, { headers })
-    .then(response => response.json())
+    .then(response => {
+      if (response.status === 422) {
+        throw "UNPROCESSABLE ENTITY"
+      }
+      return response.json()
+    })
 }
 
 function fetchPost(name, data) {

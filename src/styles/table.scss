@@ -1,0 +1,16 @@
+.table {
+  width: 100%;
+  tr {
+    th {
+      padding: 8px 12px;
+      white-space: nowrap;
+    }
+    td {
+      padding: 6px 12px;
+      white-space: nowrap;
+    }
+    .center {
+      text-align: center;
+    }
+  }
+}

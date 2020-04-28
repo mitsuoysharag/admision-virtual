@@ -4,4 +4,8 @@ function obtenerPerfil() {
   return fetchGet('obtenerPerfil')
 }
 
-export { obtenerPerfil }
+function obtenerPostulantesRespuestas() {
+  return fetchGet('obtenerPostulantesRespuestas')
+}
+
+export { obtenerPerfil, obtenerPostulantesRespuestas }

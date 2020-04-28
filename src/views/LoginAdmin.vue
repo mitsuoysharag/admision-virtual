@@ -34,8 +34,8 @@ import { redirect } from "@/services/router";
 
 export default {
   data: () => ({
-    user: "admin",
-    pass: "123",
+    user: "",
+    pass: "",
     //
     error: "",
     loading: false

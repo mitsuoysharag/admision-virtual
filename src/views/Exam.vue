@@ -147,7 +147,9 @@ export default {
       this.show_end = true;
     },
     clean(question) {
+      console.log(question);
       question.seleccionado = null;
+      console.log(question);
       this.examen.contenido.splice();
     },
     //

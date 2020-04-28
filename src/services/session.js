@@ -1,4 +1,9 @@
+import { fetchGet } from './fetch'
 import store from '../store'
+
+function verifyToken() {
+  return fetchGet('verifyToken')
+}
 
 function setSession(token, type) {
   localStorage.setItem('token', token);
@@ -24,4 +29,4 @@ function sessionExists() {
   return token && type
 }
 
-export { setSession, getSession, removeSession, sessionExists }
+export { verifyToken, setSession, getSession, removeSession, sessionExists }

@@ -57,7 +57,6 @@ export default {
     //   this.examen.tiempo_inicio || new Date().toLocaleDateString();
     // this.examen.tiempo_fin =
     //   this.examen.tiempo_inicio || new Date().toLocaleDateString();
-
     let contenido = this.examen.contenido || [];
     for (let i = 0; contenido.length < 40; i++) {
       contenido.push({
