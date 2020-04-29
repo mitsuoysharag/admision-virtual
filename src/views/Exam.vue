@@ -70,7 +70,7 @@
       </div>
       <!-- End -->
       <section v-show="show_end" class="exam__end card">
-        <p>Has finalizado el examen.</p>
+        <p>Gracias por participar. A partir de 6 pm se enviarán los resultados a su correo.</p>
         <button
           class="button button--blue"
           style="margin-right: 10px"
@@ -131,7 +131,7 @@ export default {
     error() {
       let errors = {
         nostart: "Aún no inicia el examen.",
-        end: "Ha finalizado el examen."
+        end: "Gracias por participar. A partir de 6 se enviarán los resultados a su correo."
       };
       return errors[this.error_type];
     }

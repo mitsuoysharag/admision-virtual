@@ -177,7 +177,7 @@ export default {
     // justify-content: center;
     div {
       width: max-content;
-      padding: 10px;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
       .page {
