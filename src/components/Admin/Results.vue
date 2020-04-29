@@ -13,8 +13,7 @@
               <th>DNI</th>
               <th>Nombre</th>
               <th>Puntaje</th>
-              <th>Puntaje Final</th>
-              <th v-for="(_, idx) in Array(40)" :key="idx">{{idx + 1}}</th>
+              <th v-for="(_, idx) in Array(examen_size)" :key="idx">{{idx + 1}}</th>
             </tr>
           </thead>
           <tbody>
@@ -23,9 +22,8 @@
               <td>{{p.dni}}</td>
               <td>{{p.nombre}}</td>
               <td class="center">{{p.puntaje}}</td>
-              <td class="center">{{p.puntaje_final}}</td>
               <td
-                v-for="(_, idx) in Array(40)"
+                v-for="(_, idx) in Array(examen_size)"
                 :key="idx"
                 class="center"
                 :class="{
@@ -38,7 +36,18 @@
         </table>
       </div>
       <div class="results__table-pages">
-        <button class="button" v-for="(p, idx) in pages" :key="idx" @click="page = p">{{p + 1}}</button>
+        <div>
+          <span style="margin-right: 10px">
+            <strong>Páginas:</strong>
+          </span>
+          <button
+            class="button page"
+            :class="{'page--selected': page == p}"
+            v-for="(p, idx) in pages"
+            :key="idx"
+            @click="page = p"
+          >{{p + 1}}</button>
+        </div>
       </div>
     </div>
   </div>
@@ -54,6 +63,7 @@ export default {
   data: () => ({
     postulantes: [],
     examen: {},
+    examen_size: 25,
     //
     page: 0,
     page_size: 100,
@@ -61,12 +71,13 @@ export default {
   }),
   async mounted() {
     this.examen = await obtenerExamenAdmin();
-    let postulantes = await obtenerPostulantesRespuestas();
-    let postulantes_2 = [];
-    for (let i = 0; i < Array(1005).length; i++) {
-      postulantes_2 = postulantes_2.concat(postulantes);
-    }
-    this.postulantes = postulantes_2;
+    this.postulantes = await obtenerPostulantesRespuestas();
+    // let postulantes = await obtenerPostulantesRespuestas();
+    // let postulantes_2 = [];
+    // for (let i = 0; i < Array(1005).length; i++) {
+    //   postulantes_2 = postulantes_2.concat(postulantes);
+    // }
+    // this.postulantes = postulantes_2;
     //
     this.postulantes.forEach(p => {
       let { dni, nombre, apellido_paterno, apellido_materno } = p.postulante;
@@ -74,7 +85,6 @@ export default {
       p.nombre = `${apellido_paterno} ${apellido_materno} ${nombre}`;
       p.respuestas = p.respuestas || [];
       p.puntaje = this.getScore(p.respuestas);
-      p.puntaje_final = this.finalScore(p.puntaje);
     });
     this.loading = false;
   },
@@ -97,15 +107,14 @@ export default {
     },
     getScore(answers) {
       let score = 0;
-      answers.forEach((answer, idx) => {
-        let correct = this.examen.contenido[idx].correcta;
-        if (answer != null) {
-          if (correct === answer) score += 0.5;
-          else score -= 0.1;
+      this.examen.contenido.forEach(({ correcta }, idx) => {
+        if (answers[idx] != null) {
+          if (correcta === answers[idx]) score += 4;
+          else score -= 1;
         }
       });
-      score = Math.round(score * 100) / 100;
-      score = Math.max(0, Math.min(score, 20));
+      // score = Math.round(score * 100) / 100;
+      score = Math.max(0, score);
       return score;
     },
     finalScore(score) {
@@ -121,8 +130,7 @@ export default {
           "DNI",
           "Nombre",
           "Puntaje",
-          "Puntaje Final",
-          ...[...Array(40).keys()].map(x => x + 1)
+          ...[...Array(this.examen_size).keys()].map(x => x + 1)
         ]
       ];
       this.postulantes.forEach(p => {
@@ -131,8 +139,7 @@ export default {
           p.dni,
           p.nombre,
           p.puntaje,
-          p.puntaje_final,
-          ...[...Array(40).keys()].map(
+          ...[...Array(this.examen_size).keys()].map(
             x => this.toOption(p.respuestas[x]) || "-"
           )
         ]);
@@ -167,13 +174,27 @@ export default {
   }
   &__table-pages {
     overflow-x: auto;
-    padding: 6px;
-    display: flex;
-    justify-content: center;
-    .button {
-      padding: 4px;
-      border: .5px solid #ececec;
-      font-weight: initial;
+    // justify-content: center;
+    div {
+      width: max-content;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      .page {
+        padding: 4px 8px;
+        font-weight: initial;
+        border-radius: 4px;
+        &--selected {
+          background: #0070c4;
+          color: #fff;
+          &:hover {
+            background: #0070c4 !important;
+          }
+        }
+        &:hover {
+          background: #dbefff;
+        }
+      }
     }
   }
 }

@@ -100,4 +100,41 @@ aside {
   flex-grow: 1;
   // background: #f2f7fb;
 }
+
+@media only screen and (max-width: 955px) {
+  .app {
+    flex-direction: column;
+  }
+  aside {
+    padding: 0;
+    nav {
+      width: max-content;
+      margin: 0 auto;
+      ul {
+        display: flex;
+        .link {
+          padding: 12px 16px;
+          border-right: none;
+          border-bottom: 3px solid #fff;
+          &:hover {
+            background: #f7faff;
+            border-right: none;
+            border-bottom: 3px solid #b1c6e6;
+          }
+          .icon {
+            margin-right: 8px;
+          }
+        }
+        .link--selected {
+          border-right: none;
+          border-bottom: 3px solid #0070c4;
+          &:hover {
+            border-right: none;
+            border-bottom: 3px solid #0070c4;
+          }
+        }
+      }
+    }
+  }
+}
 </style>
