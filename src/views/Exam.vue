@@ -36,7 +36,17 @@
               />
               <span>{{alternative}}</span>
             </label>
-            <button class="question__action button" @click="clean(question)">Limpiar</button>
+
+            <label class="question__alternative question__alternative--null button">
+              <input
+                v-show="false"
+                type="radio"
+                :name="q_idx"
+                :value="null"
+                v-model="question.seleccionado"
+              />
+              <span>Limpiar</span>
+            </label>
           </div>
         </section>
         <div class="exam__actions">
@@ -147,10 +157,9 @@ export default {
       this.show_end = true;
     },
     clean(question) {
-      console.log(question);
-      question.seleccionado = null;
-      console.log(question);
+      question.seleccionado = 0;
       this.examen.contenido.splice();
+      question.alternativas.splice();
     },
     //
     redirect() {
@@ -211,6 +220,10 @@ export default {
     // color: #3a3a3a;
     display: flex;
     cursor: pointer;
+    &--null {
+      margin: 20px auto 0;
+      width: min-content;
+    }
   }
   &__action {
     display: block;
