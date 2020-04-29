@@ -5,11 +5,27 @@
       src="https://upload.wikimedia.org/wikipedia/commons/4/46/UNMSM_Escudo_y_Nombre.png"
       alt
     />
+    <button class="button" @click="logout()">Cerrar Sesión</button>
   </header>
 </template>
 
 <script>
-export default {};
+import { getSession, removeSession } from "@/services/session";
+import { redirect } from "@/services/router";
+
+export default {
+  methods: {
+    logout() {
+      let type = getSession()["type"];
+      removeSession();
+      if (type == 0) {
+        redirect("login-admin");
+      } else {
+        redirect("login");
+      }
+    }
+  }
+};
 </script>
 
 <style lang='scss' scoped>
@@ -21,6 +37,7 @@ export default {};
   //
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   &__logo {
     height: 100%;
