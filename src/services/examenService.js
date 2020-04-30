@@ -18,4 +18,8 @@ function guardarExamenAdmin(examen) {
   })
 }
 
-export { obtenerExamenAdmin, obtenerExamen, obtenerExamenDatos, guardarExamenAdmin }
+function finalizarExamen() {
+  return fetchGet('finalizarExamen')
+}
+
+export { obtenerExamenAdmin, obtenerExamen, obtenerExamenDatos, guardarExamenAdmin, finalizarExamen }

@@ -65,18 +65,18 @@
             class="button button--green"
             v-show="question_idx === this.examen.contenido.length - 1 && !show_end"
             @click="end()"
-          >Finalizar</button>
+          >Siguiente</button>
         </div>
       </div>
       <!-- End -->
       <section v-show="show_end" class="exam__end card">
-        <p>Gracias por participar. A partir de 6 pm se enviarán los resultados a su correo.</p>
+        <p>Ha llegado al final del examen. Puede volver y modificar sus respuestas, o finalizar su participación.</p>
         <button
           class="button button--blue"
           style="margin-right: 10px"
           @click="show_end = false;"
         >Volver</button>
-        <button class="button button--blue" @click="redirect()">Salir</button>
+        <button class="button button--red" @click="dialog_end = true">Finalizar</button>
       </section>
     </div>
     <!-- ERROR -->
@@ -85,7 +85,18 @@
       <button class="button button--blue" @click="redirect()">Salir</button>
     </section>
     <!-- ANSWERS -->
-    <Answers v-if="show_end || (error_type && error_type != 'nostart')" />
+    <Answers v-if="show_end" />
+
+    <!-- DIALOG -->
+    <Dialog v-model="dialog_end">
+      <p
+        style="margin: 10px 10px 20px 10px"
+      >Si finaliza su participación ya no podrá modificar sus respuestas.</p>
+      <div class="card__actions">
+        <button class="button" @click="dialog_end = false">Cancelar</button>
+        <button class="button button--red" @click="dialog_end = false; finalizarExamen()">Finalizar</button>
+      </div>
+    </Dialog>
   </div>
 </template>
 
@@ -93,8 +104,9 @@
 import Loading from "@/components/Loading";
 import Header from "@/components/Header";
 import Answers from "@/components/Answers";
+import Dialog from "@/components/Dialog";
 
-import { obtenerExamen } from "@/services/examenService";
+import { obtenerExamen, finalizarExamen } from "@/services/examenService";
 import {
   obtenerRespuestas,
   ingresarRespuestas
@@ -108,7 +120,10 @@ export default {
     error_type: "",
     //
     loading: true,
-    show_end: false
+    show_end: false,
+    dialog_end: false,
+    final_message:
+      "Gracias por participar. A partir de 6 pm se enviarán los resultados a su correo."
   }),
   async mounted() {
     let respuestas = await obtenerRespuestas();
@@ -131,7 +146,7 @@ export default {
     error() {
       let errors = {
         nostart: "Aún no inicia el examen.",
-        end: "Gracias por participar. A partir de 6 se enviarán los resultados a su correo."
+        end: this.final_message
       };
       return errors[this.error_type];
     }
@@ -156,10 +171,11 @@ export default {
       await this.save();
       this.show_end = true;
     },
-    clean(question) {
-      question.seleccionado = 0;
-      this.examen.contenido.splice();
-      question.alternativas.splice();
+    async finalizarExamen() {
+      this.loading = true;
+      await finalizarExamen();
+      this.loading = false;
+      this.error_type = 'end';
     },
     //
     redirect() {
@@ -176,7 +192,8 @@ export default {
   components: {
     Loading,
     Header,
-    Answers
+    Answers,
+    Dialog
   }
 };
 </script>
@@ -195,7 +212,7 @@ export default {
   }
   &__end {
     width: 100%;
-    max-width: 300px;
+    max-width: 400px;
     margin: 20px auto;
     padding: 20px;
     font-size: 1.2rem;
@@ -233,7 +250,7 @@ export default {
 }
 .error {
   width: 100%;
-  max-width: 300px;
+  max-width: 400px;
   margin: 20px auto;
   padding: 20px;
   font-size: 1.2rem;

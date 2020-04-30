@@ -38,7 +38,7 @@
       <div class="results__table-pages">
         <div>
           <span style="margin-right: 10px">
-            <strong>Páginas:</strong>
+            <strong>Página:</strong>
           </span>
           <button
             class="button page"
