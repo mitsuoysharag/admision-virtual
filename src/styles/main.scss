@@ -27,12 +27,17 @@ textarea {
 }
 select {
   padding: 8px 12px;
+  background: #fff;
   font-size: 1.1rem;
   font-weight: bold;
-  border: 1px solid #dddddd;
+  border: none;
+  // border: 1px solid #dddddd;
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  &:focus {
+    outline-width: 0;
+  }
 }
 // 
 ::-webkit-scrollbar {

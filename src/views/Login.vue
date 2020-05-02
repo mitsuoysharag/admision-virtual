@@ -88,21 +88,25 @@ export default {
   height: 100%;
   width: 100%;
   max-width: 340px;
-  padding: 30px;
+  padding: 0 30px;
   border-radius: 0;
   z-index: 1;
   //
   display: grid;
   grid-template-rows: 3fr 4fr 3fr;
-  // justify-content: center;
+  justify-content: center;
   align-items: center;
 
   &__logo {
+    padding: 30px 0;
     img {
       display: block;
       margin: 0 auto;
       width: 100px;
     }
+  }
+  form {
+    max-width: 360px;
   }
   &__title {
     font-size: 2rem;
