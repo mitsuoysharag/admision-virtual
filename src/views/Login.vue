@@ -6,7 +6,7 @@
         <h1 class="login__title card__title">Iniciar Sesión</h1>
         <div class="error" v-show="error">
           <span>{{error}}</span>
-          <i class="fa fa-times" @click="error = ''"></i>
+          <i class="fa fa-times" style="cursor: pointer" @click="error = ''"></i>
         </div>
         <div class="login__body">
           <span>DNI:</span>

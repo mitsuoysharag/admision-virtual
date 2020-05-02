@@ -7,7 +7,7 @@
       <p class="profile__welcome">Bienvenido,</p>
       <p
         class="profile__name"
-      >{{profile.apellido_paterno}} {{profile.apellido_materno}} {{profile.nombre}}</p>
+      >{{profile.apellido_paterno}} {{profile.apellido_materno}}, {{profile.nombre}}</p>
       <section class="profile__content">
         <!--  -->
         <i class="fa fa-id-card"></i>
@@ -17,11 +17,8 @@
         <i class="fa fa-graduation-cap"></i>
         <span class="profile__item">Cód. Postulante:</span>
         <span class="profile__value">{{profile.codigo_postulante}}</span>
-      </section>
-    </section>
-    <!-- EXAM -->
-    <section class="profile card">
-      <section class="profile__content">
+        <!--  -->
+        <hr class="profile__divider" />
         <!--  -->
         <i class="fa fa-question"></i>
         <span class="profile__item">N° Preguntas:</span>
@@ -71,12 +68,12 @@ export default {
     },
     dateFormat(date) {
       date = new Date(date);
-      let day = date.getDate();
+      let day = this.format_two_digits(date.getDate());
       let month = this.format_two_digits(date.getMonth() + 1);
       let year = date.getFullYear();
       let hours = this.format_two_digits(date.getHours());
       let minutes = this.format_two_digits(date.getMinutes());
-      date = `${day}-${month}-${year} ${hours}:${minutes}`;
+      date = `${day}/${month}/${year} ${hours}:${minutes}`;
       return date;
     },
     format_two_digits(n) {
@@ -92,20 +89,20 @@ export default {
 
 <style lang='scss' scoped>
 .profile {
-  max-width: 540px;
+  max-width: 520px;
   margin: 20px auto;
   padding: 28px;
   color: #313435;
 
   &__welcome {
-    margin: 0 0 4px 0;
+    margin: 0;
     // color: #a7a7a7;
     color: #7db1f7;
     font-size: 1.5rem;
     font-weight: bold;
   }
   &__name {
-    margin: 0 0 28px 0;
+    margin: 0 0 30px 0;
     font-size: 1.5rem;
     font-weight: bold;
   }
@@ -123,10 +120,17 @@ export default {
     font-weight: bold;
   }
   &__value {
-    padding: 8px 14px;
-    background: #f6f6f6;
+    padding: 10px 16px;
+    // background: #f6f6f6;
+    background: #f3f8ff;
     font-size: 0.95rem;
     border-radius: 4px;
+  }
+  &__divider {
+    grid-column: 1 / 4;
+    width: 100%;
+    // margin: 0;
+    border: .5px solid #ececec;
   }
   &__actions {
     margin-top: 24px;
