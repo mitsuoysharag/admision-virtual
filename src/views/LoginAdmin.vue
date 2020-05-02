@@ -78,8 +78,8 @@ export default {
 .login {
   height: 100%;
   width: 100%;
-  max-width: 400px;
-  padding: 20px;
+  max-width: 340px;
+  padding: 30px;
   border-radius: 0;
   z-index: 1;
   //
@@ -94,12 +94,12 @@ export default {
   &__body {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-column-gap: 20px;
+    grid-column-gap: 16px;
     grid-row-gap: 12px;
     align-items: center;
   }
   &__actions {
-    margin-top: 22px;
+    margin-top: 20px;
   }
 }
 .error {
@@ -125,5 +125,14 @@ export default {
     url("~@/assets/background/unmsm.jpg");
   background-size: cover;
   background-position: center center;
+}
+
+@media only screen and (max-width: 955px) {
+  .login {
+    max-width: 100%;
+  }
+  .background {
+    display: none;
+  }
 }
 </style>

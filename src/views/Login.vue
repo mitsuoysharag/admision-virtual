@@ -11,7 +11,7 @@
         <div class="login__body">
           <span>DNI:</span>
           <InputText v-model="dni" type="text" />
-          <span>Cód. de Inscripción:</span>
+          <span>Cód. Inscripción:</span>
           <InputText v-model="codigo_inscripcion" type="text" />
         </div>
         <div class="login__actions card__actions">
@@ -20,7 +20,10 @@
       </form>
     </div>
     <!--  -->
-    <div class="background"></div>
+    <div class="background">
+      <p class="background__title">Proceso de Admisión 2020-I</p>
+      <p class="background__subtitle">Maestría</p>
+    </div>
   </div>
 </template>
 
@@ -80,8 +83,8 @@ export default {
 .login {
   height: 100%;
   width: 100%;
-  max-width: 400px;
-  padding: 20px;
+  max-width: 340px;
+  padding: 30px;
   border-radius: 0;
   z-index: 1;
   //
@@ -96,12 +99,12 @@ export default {
   &__body {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-column-gap: 20px;
+    grid-column-gap: 16px;
     grid-row-gap: 12px;
     align-items: center;
   }
   &__actions {
-    margin-top: 22px;
+    margin-top: 20px;
   }
 }
 .error {
@@ -121,11 +124,41 @@ export default {
   // filter: blur(2px);
   background-image: linear-gradient(
       to right,
-      rgba(0, 111, 196, 0.75),
-      rgba(0, 111, 196, 0.95)
+      rgba(0, 111, 196, 0.5),
+      rgba(0, 111, 196, 0.5)
     ),
-    url("~@/assets/background/unmsm.jpg");
+    url("~@/assets/background/people.jpg");
   background-size: cover;
   background-position: center center;
+  //
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__title {
+    margin: 80px;
+    margin-bottom: 0;
+    color: #fff;
+    font-size: 3.7rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  &__subtitle {
+    margin: 80px;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 2.5rem;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 955px) {
+  .login {
+    max-width: 100%;
+  }
+  .background {
+    display: none;
+  }
 }
 </style>

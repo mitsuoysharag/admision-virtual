@@ -4,7 +4,7 @@
     <Loading :active="loading" />
     <!-- PROFILE -->
     <section class="profile card">
-      <p class="profile__welcome">Bienvenido,</p>
+      <p class="profile__welcome">Bienvenido</p>
       <p
         class="profile__name"
       >{{profile.apellido_paterno}} {{profile.apellido_materno}}, {{profile.nombre}}</p>
@@ -89,21 +89,20 @@ export default {
 
 <style lang='scss' scoped>
 .profile {
-  max-width: 520px;
+  max-width: 540px;
   margin: 20px auto;
   padding: 28px;
   color: #313435;
 
   &__welcome {
-    margin: 0;
-    // color: #a7a7a7;
+    margin: 0 0 2px 0;
     color: #7db1f7;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
   }
   &__name {
     margin: 0 0 30px 0;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
   }
   &__content {
@@ -117,20 +116,22 @@ export default {
   &__item {
     margin-right: 18px;
     font-size: 0.95rem;
-    font-weight: bold;
+    font-weight: bolder;
   }
   &__value {
     padding: 10px 16px;
     // background: #f6f6f6;
-    background: #f3f8ff;
+    background: #f2f7fc;
+    // color: #00000079;
     font-size: 0.95rem;
+    // font-weight: bold;
     border-radius: 4px;
   }
   &__divider {
     grid-column: 1 / 4;
     width: 100%;
     // margin: 0;
-    border: .5px solid #ececec;
+    border: 0.5px solid #ececec;
   }
   &__actions {
     margin-top: 24px;
