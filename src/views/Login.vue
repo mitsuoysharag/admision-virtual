@@ -2,10 +2,10 @@
   <div class="full">
     <Loading :active="loading" />
     <div class="login card">
+      <div class="login__logo">
+        <img src="~@/assets/logo.png" alt />
+      </div>
       <form @submit.prevent="login()">
-        <div class="login__logo">
-          <img src="~@/assets/logo.png" alt />
-        </div>
         <h1 class="login__title card__title">Iniciar Sesión</h1>
         <div class="error" v-show="error">
           <span>{{error}}</span>
@@ -92,20 +92,16 @@ export default {
   border-radius: 0;
   z-index: 1;
   //
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-rows: 3fr 4fr 3fr;
+  // justify-content: center;
   align-items: center;
 
   &__logo {
-    position: absolute;
-    top: 64px;
-    left: 0;
-    width: 100%;
     img {
       display: block;
       margin: 0 auto;
       width: 100px;
-      vertical-align: bottom;
     }
   }
   &__title {

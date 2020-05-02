@@ -11,7 +11,9 @@
             <tr>
               <!-- <th>N°</th> -->
               <th>DNI</th>
-              <th>Nombre</th>
+              <th>Apellidos y Nombres</th>
+              <th>UPG</th>
+              <th>Programa</th>
               <th>Puntaje</th>
               <th v-for="(_, idx) in Array(examen_size)" :key="idx">{{idx + 1}}</th>
             </tr>
@@ -19,8 +21,10 @@
           <tbody>
             <tr v-for="(p, p_idx) in postulantes_page" :key="p_idx">
               <!-- <td>{{p_idx + 1}}</td> -->
-              <td>{{p.dni}}</td>
+              <td class="center">{{p.dni}}</td>
               <td>{{`${p.apellido_paterno} ${p.apellido_materno}, ${p.nombre}`}}</td>
+              <td class="center">{{p.codigo_upg}}</td>
+              <td class="center">{{p.codigo_programa}}</td>
               <td class="center">{{p.puntaje}}</td>
               <td
                 v-for="(_, idx) in Array(examen_size)"
@@ -125,7 +129,9 @@ export default {
         [
           // "N°",
           "DNI",
-          "Nombre",
+          "Apellidos y Nombres",
+          "UPG",
+          "Programa",
           "Puntaje",
           ...[...Array(this.examen_size).keys()].map(x => x + 1)
         ]
@@ -134,7 +140,9 @@ export default {
         data.push([
           // idx + 1,
           p.dni,
-          p.nombre,
+          `${p.apellido_paterno} ${p.apellido_materno} - ${p.nombre}`,
+          p.codigo_upg,
+          p.codigo_programa,
           p.puntaje,
           ...[...Array(this.examen_size).keys()].map(
             x => this.toOption(p.respuestas[x]) || "-"
