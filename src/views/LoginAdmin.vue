@@ -2,6 +2,9 @@
   <div class="full">
     <Loading :active="loading" />
     <div class="login card">
+      <div class="login__logo">
+        <img src="~@/assets/logo.png" alt />
+      </div>
       <form @submit.prevent="login()">
         <h1 class="login__title card__title">Iniciar Sesión</h1>
         <div class="error" v-show="error">
@@ -76,17 +79,30 @@ export default {
   flex-direction: row;
 }
 .login {
+  position: relative;
   height: 100%;
   width: 100%;
   max-width: 340px;
-  padding: 30px;
+  padding: 0 30px;
   border-radius: 0;
   z-index: 1;
   //
-  display: flex;
+  display: grid;
+  grid-template-rows: 3fr 4fr 3fr;
   justify-content: center;
   align-items: center;
 
+  &__logo {
+    padding: 30px 0;
+    img {
+      display: block;
+      margin: 0 auto;
+      width: 100px;
+    }
+  }
+  form {
+    max-width: 360px;
+  }
   &__title {
     font-size: 2rem;
     margin-bottom: 24px;
