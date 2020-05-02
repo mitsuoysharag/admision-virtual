@@ -227,6 +227,7 @@ export default {
   margin: 20px auto;
   padding: 20px;
   &__question {
+    white-space: pre-wrap;
     margin: 0 0 20px 0;
   }
   hr {
@@ -238,6 +239,7 @@ export default {
   }
   &__alternative {
     margin-bottom: 10px;
+    white-space: pre-wrap;
     // color: #3a3a3a;
     display: flex;
     cursor: pointer;
