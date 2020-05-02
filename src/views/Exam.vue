@@ -114,6 +114,7 @@ import {
   obtenerRespuestas,
   ingresarRespuestas
 } from "@/services/puntajeService";
+import { removeSession } from "@/services/session";
 import { redirect } from "@/services/router";
 
 export default {
@@ -183,7 +184,8 @@ export default {
     },
     //
     redirect() {
-      redirect("panel");
+      removeSession();
+      redirect("login");
     },
     //
     dateFormat(date) {

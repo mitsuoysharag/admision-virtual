@@ -3,6 +3,9 @@
     <Loading :active="loading" />
     <div class="login card">
       <form @submit.prevent="login()">
+        <div class="login__logo">
+          <img src="~@/assets/logo.png" alt />
+        </div>
         <h1 class="login__title card__title">Iniciar Sesión</h1>
         <div class="error" v-show="error">
           <span>{{error}}</span>
@@ -81,6 +84,7 @@ export default {
   flex-direction: row;
 }
 .login {
+  position: relative;
   height: 100%;
   width: 100%;
   max-width: 340px;
@@ -92,6 +96,18 @@ export default {
   justify-content: center;
   align-items: center;
 
+  &__logo {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    img {
+      display: block;
+      margin: 0 auto;
+      width: 100px;
+      vertical-align: bottom;
+    }
+  }
   &__title {
     font-size: 2rem;
     margin-bottom: 24px;
