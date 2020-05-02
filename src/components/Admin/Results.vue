@@ -20,7 +20,7 @@
             <tr v-for="(p, p_idx) in postulantes_page" :key="p_idx">
               <!-- <td>{{p_idx + 1}}</td> -->
               <td>{{p.dni}}</td>
-              <td>{{p.nombre}}</td>
+              <td>{{`${p.apellido_paterno} ${p.apellido_materno}, ${p.nombre}`}}</td>
               <td class="center">{{p.puntaje}}</td>
               <td
                 v-for="(_, idx) in Array(examen_size)"
@@ -80,9 +80,6 @@ export default {
     // this.postulantes = postulantes_2;
     //
     this.postulantes.forEach(p => {
-      let { dni, nombre, apellido_paterno, apellido_materno } = p.postulante;
-      p.dni = dni;
-      p.nombre = `${apellido_paterno} ${apellido_materno} ${nombre}`;
       p.respuestas = p.respuestas || [];
       p.puntaje = this.getScore(p.respuestas);
     });
@@ -114,7 +111,7 @@ export default {
         }
       });
       // score = Math.round(score * 100) / 100;
-      score = Math.max(0, score);
+      // score = Math.max(0, score);
       return score;
     },
     finalScore(score) {

@@ -5,6 +5,13 @@
     <div v-if="examen.contenido && !error_type" class="container">
       <!-- EXAM -->
       <div v-show="!show_end" class="exam">
+        <!-- ALERT -->
+        <m-alert v-model="show_alert" style="margin-bottom: 20px">
+          <span>
+            <i class="fa fa-info-circle" style="margin-right: 8px"></i> Las respuestas seleccionadas se guardarán al cambiar de pregunta.
+          </span>
+        </m-alert>
+        <!-- SELECT -->
         <select class="exam__select" v-model="question_idx">
           <option
             v-for="(question, q_idx) in examen.contenido"
@@ -63,7 +70,7 @@
           >Siguiente</button>
           <button
             class="button button--green"
-            v-show="question_idx === this.examen.contenido.length - 1 && !show_end"
+            v-show="question_idx === this.examen.contenido.length - 1"
             @click="end()"
           >Siguiente</button>
         </div>
@@ -85,10 +92,10 @@
       <button class="button button--blue" @click="redirect()">Salir</button>
     </section>
     <!-- ANSWERS -->
-    <Answers v-if="show_end" />
+    <!-- <Answers v-if="show_end" /> -->
 
     <!-- DIALOG -->
-    <Dialog v-model="dialog_end">
+    <m-dialog v-model="dialog_end">
       <p
         style="margin: 10px 10px 20px 10px"
       >Si finaliza su participación ya no podrá modificar sus respuestas.</p>
@@ -96,15 +103,14 @@
         <button class="button" @click="dialog_end = false">Cancelar</button>
         <button class="button button--red" @click="dialog_end = false; finalizarExamen()">Finalizar</button>
       </div>
-    </Dialog>
+    </m-dialog>
   </div>
 </template>
 
 <script>
 import Loading from "@/components/Loading";
 import Header from "@/components/Header";
-import Answers from "@/components/Answers";
-import Dialog from "@/components/Dialog";
+// import Answers from "@/components/Answers";
 
 import { obtenerExamen, finalizarExamen } from "@/services/examenService";
 import {
@@ -121,6 +127,7 @@ export default {
     //
     loading: true,
     show_end: false,
+    show_alert: true,
     dialog_end: false,
     final_message:
       "Gracias por participar. A partir de 6 pm se enviarán los resultados a su correo."
@@ -175,7 +182,7 @@ export default {
       this.loading = true;
       await finalizarExamen();
       this.loading = false;
-      this.error_type = 'end';
+      this.error_type = "end";
     },
     //
     redirect() {
@@ -191,9 +198,8 @@ export default {
   },
   components: {
     Loading,
-    Header,
-    Answers,
-    Dialog
+    Header
+    // Answers
   }
 };
 </script>
