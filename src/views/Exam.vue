@@ -91,8 +91,6 @@
       <p>{{error}}</p>
       <button class="button button--blue" @click="redirect()">Salir</button>
     </section>
-    <!-- ANSWERS -->
-    <!-- <Answers v-if="show_end" /> -->
 
     <!-- DIALOG -->
     <m-dialog v-model="dialog_end">
@@ -110,7 +108,6 @@
 <script>
 import Loading from "@/components/Loading";
 import Header from "@/components/Header";
-// import Answers from "@/components/Answers";
 
 import { obtenerExamen, finalizarExamen } from "@/services/examenService";
 import {
@@ -199,7 +196,6 @@ export default {
   components: {
     Loading,
     Header
-    // Answers
   }
 };
 </script>
