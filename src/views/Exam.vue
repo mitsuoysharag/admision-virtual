@@ -8,7 +8,7 @@
         <!-- ALERT -->
         <m-alert v-model="show_alert" style="margin-bottom: 20px">
           <span>
-            <i class="fa fa-info-circle" style="margin-right: 8px"></i> Las respuestas seleccionadas se guardarán al cambiar de pregunta.
+            <i class="fa fa-info-circle" style="margin-right: 8px"></i> Las respuesta seleccionada se guardarán al cambiar de pregunta.
           </span>
         </m-alert>
         <!-- SELECT -->
@@ -35,7 +35,7 @@
               :key="a_idx"
             >
               <div class="question__radio">
-                {{alt_arr[a_idx]}})
+                <span>{{alt_arr[a_idx]}})</span>
                 <input
                   type="radio"
                   :name="q_idx"
