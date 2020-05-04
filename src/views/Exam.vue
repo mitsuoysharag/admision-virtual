@@ -34,13 +34,16 @@
               v-for="(alternative, a_idx) in question.alternativas"
               :key="a_idx"
             >
-              <input
-                type="radio"
-                :name="q_idx"
-                :value="a_idx"
-                v-model="question.seleccionado"
-                style="margin: 5px 10px 0 0"
-              />
+              <div class="question__radio">
+                {{alt_arr[a_idx]}})
+                <input
+                  type="radio"
+                  :name="q_idx"
+                  :value="a_idx"
+                  v-model="question.seleccionado"
+                  style="margin: 5px 10px 0 5px"
+                />
+              </div>
               <span>{{alternative}}</span>
             </label>
 
@@ -121,6 +124,7 @@ export default {
   data: () => ({
     examen: {},
     question_idx: 0,
+    alt_arr: ["A", "B", "C", "D"],
     error_type: "",
     //
     loading: true,
@@ -242,11 +246,17 @@ export default {
     white-space: pre-wrap;
     // color: #3a3a3a;
     display: flex;
+    align-items: flex-start;
     cursor: pointer;
     &--null {
       margin: 20px auto 0;
       width: min-content;
     }
+  }
+  &__radio {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
   }
   &__action {
     display: block;

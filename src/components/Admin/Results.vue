@@ -3,14 +3,15 @@
     <Loading :active="loading" />
     <div class="results card">
       <div class="results__actions">
-        <button class="button button--blue" @click="exportCSV()">Exportar CSV</button>
+        <button class="button button--blue" @click="exportTable()">Exportar</button>
       </div>
       <div class="results__table">
-        <table class="table">
+        <table class="table" id="mytable">
           <thead>
             <tr>
               <!-- <th>N°</th> -->
               <th>DNI</th>
+              <th>Cod. Postulante</th>
               <th>Apellidos y Nombres</th>
               <th>UPG</th>
               <th>Programa</th>
@@ -22,6 +23,7 @@
             <tr v-for="(p, p_idx) in postulantes_page" :key="p_idx">
               <!-- <td>{{p_idx + 1}}</td> -->
               <td class="center">{{p.dni}}</td>
+              <td class="center">{{p.codigo_postulante}}</td>
               <td>{{`${p.apellido_paterno} ${p.apellido_materno}, ${p.nombre}`}}</td>
               <td class="center">{{p.codigo_upg}}</td>
               <td class="center">{{p.codigo_programa}}</td>
@@ -62,6 +64,7 @@ import Loading from "@/components/Loading";
 
 import { obtenerPostulantesRespuestas } from "@/services/postulanteService";
 import { obtenerExamenAdmin } from "@/services/examenService";
+import { tableToXLSX } from "@/services/sheet";
 
 export default {
   data: () => ({
@@ -124,40 +127,8 @@ export default {
       else if (score <= 13) score = 13;
       return score;
     },
-    exportCSV() {
-      let data = [
-        [
-          // "N°",
-          "DNI",
-          "Apellidos y Nombres",
-          "UPG",
-          "Programa",
-          "Puntaje",
-          ...[...Array(this.examen_size).keys()].map(x => x + 1)
-        ]
-      ];
-      this.postulantes.forEach(p => {
-        data.push([
-          // idx + 1,
-          p.dni,
-          `${p.apellido_paterno} ${p.apellido_materno} - ${p.nombre}`,
-          p.codigo_upg,
-          p.codigo_programa,
-          p.puntaje,
-          ...[...Array(this.examen_size).keys()].map(
-            x => this.toOption(p.respuestas[x]) || "-"
-          )
-        ]);
-      });
-      //
-      let csvContent =
-        "data:text/csv;charset=utf-8," + data.map(e => e.join(",")).join("\n");
-      var encodedUri = encodeURI(csvContent);
-      var link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "resultados.csv");
-      document.body.appendChild(link);
-      link.click();
+    exportTable() {
+      tableToXLSX("mytable");
     }
   },
   components: {

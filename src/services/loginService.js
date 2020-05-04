@@ -1,8 +1,8 @@
 import { fetchPost } from './fetch'
 
-function login(dni, codigo_inscripcion) {
+function login(dni, codigo) {
   return fetchPost('login', {
-    dni, codigo_inscripcion
+    dni, codigo
   })
 }
 

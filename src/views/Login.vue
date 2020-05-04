@@ -14,8 +14,8 @@
         <div class="login__body">
           <span>DNI:</span>
           <InputText v-model="dni" type="text" />
-          <span>Cód. Inscripción:</span>
-          <InputText v-model="codigo_inscripcion" type="text" />
+          <span>Cód. Postulante:</span>
+          <InputText v-model="codigo" type="text" />
         </div>
         <div class="login__actions card__actions">
           <button class="button button--blue">Ingresar</button>
@@ -41,9 +41,9 @@ import { redirect } from "@/services/router";
 export default {
   data: () => ({
     // dni: "76530512",
-    // codigo_inscripcion: "aaa",
+    // codigo: "aaa",
     dni: "",
-    codigo_inscripcion: "",
+    codigo: "",
     //
     error: "",
     loading: false
@@ -53,7 +53,7 @@ export default {
       this.error = "";
       if (this.validate()) {
         this.loading = true;
-        let { token, error } = await login(this.dni, this.codigo_inscripcion);
+        let { token, error } = await login(this.dni, this.codigo);
         this.loading = false;
         if (error) {
           this.error = error;
@@ -66,7 +66,7 @@ export default {
       }
     },
     validate() {
-      return this.dni && this.codigo_inscripcion;
+      return this.dni && this.codigo;
     }
   },
   components: {
