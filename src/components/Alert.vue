@@ -12,10 +12,12 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "@/styles/color.scss";
+
 .alert {
-  padding: 16px 20px;
-  background: #5f88f8;
-  color: #fff;
+  padding: 12px 18px;
+  color: $color-primary;
+  border: 1px solid $color-primary;
   font-weight: bold;
   //
   display: flex;

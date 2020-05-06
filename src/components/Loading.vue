@@ -28,7 +28,7 @@ export default {
   &__icon {
     border: 4px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 4px solid #0070c4;
+    border-top: 4px solid rgb(151, 49, 51);
     width: 90px;
     height: 90px;
     animation: rotate 0.9s linear infinite;

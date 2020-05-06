@@ -12,13 +12,14 @@
           <i class="fa fa-times" style="cursor: pointer" @click="error = ''"></i>
         </div>
         <div class="login__body">
-          <span>DNI:</span>
+          <!-- <span style="max-width: 140px">N° de documento de indentidad:</span> -->
+          <span>Doc. de indentidad:</span>
           <InputText v-model="dni" type="text" />
           <span>Cód. Postulante:</span>
           <InputText v-model="codigo" type="text" />
         </div>
         <div class="login__actions card__actions">
-          <button class="button button--blue">Ingresar</button>
+          <button class="button button--primary">Ingresar</button>
         </div>
       </form>
     </div>
@@ -87,7 +88,7 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
-  max-width: 340px;
+  max-width: 360px;
   padding: 0 30px;
   border-radius: 0;
   z-index: 1;
@@ -115,7 +116,7 @@ export default {
   &__body {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-column-gap: 16px;
+    grid-column-gap: 12px;
     grid-row-gap: 12px;
     align-items: center;
   }
@@ -139,9 +140,9 @@ export default {
   width: 100%;
   // filter: blur(2px);
   background-image: linear-gradient(
-      to right,
-      rgba(0, 111, 196, 0.5),
-      rgba(0, 111, 196, 0.5)
+      90deg,
+      rgba(125, 94, 22, 0.68),
+      rgba(115, 85, 18, 0.5)
     ),
     url("~@/assets/background/people.jpg");
   background-size: cover;

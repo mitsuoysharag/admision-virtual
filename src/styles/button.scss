@@ -6,10 +6,18 @@
     background:  $color-hover;
   }
 }
+@mixin button-color-outline($color, $color-hover, $color-font){
+  color:  $color;
+  border: 1px solid $color;
+  &:hover {
+    background: $color-hover;
+    // color:  #fff;
+  }
+}
 
 .button {
   padding: 9px 18px;
-  font-size: 1rem;
+  font-size: .9rem;
   font-weight: bold;
   border: none;
   // border-radius: 4px;
@@ -23,6 +31,9 @@
   }
   @include button-color(#fff, #e0e0e0, #646464);
 
+  &--primary {
+    @include button-color(rgb(151, 49, 51), rgb(129, 30, 32), #fff);
+  }
   &--red {
     @include button-color(#f03636, #c93232, #fff);
   }
@@ -34,6 +45,10 @@
   }
   &--yellow {
     @include button-color(#fcd658, #e9b819, #fff);
+  }
+
+  &--primary-outline {
+    @include button-color-outline(rgb(151, 49, 51), rgb(255, 241, 241), #fff);
   }
 
   &--icon {

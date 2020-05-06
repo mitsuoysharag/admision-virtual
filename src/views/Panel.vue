@@ -33,7 +33,7 @@
         <span class="profile__value">{{examen.tiempo_fin}}</span>
       </section>
       <div class="profile__actions card__actions" @click="select()">
-        <button class="button button--blue">Ingresar</button>
+        <button class="button button--primary">Ingresar</button>
       </div>
     </section>
   </div>
@@ -96,7 +96,7 @@ export default {
 
   &__welcome {
     margin: 0 0 2px 0;
-    color: #7db1f7;
+    color: rgb(192, 96, 98);
     font-size: 1.8rem;
     font-weight: bold;
   }
@@ -121,7 +121,7 @@ export default {
   &__value {
     padding: 10px 16px;
     // background: #f6f6f6;
-    background: #f2f7fc;
+    background: #f3f3f3;
     // color: #00000079;
     font-size: 0.95rem;
     // font-weight: bold;

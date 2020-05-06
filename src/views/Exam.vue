@@ -55,18 +55,18 @@
         </section>
         <div class="exam__actions">
           <button
-            class="button button--blue"
+            class="button button--primary"
             v-show="question_idx > 0"
             @click="go(-1); show_end = false"
           >Anterior</button>
           <div></div>
           <button
-            class="button button--blue"
+            class="button button--primary"
             v-show="question_idx < this.examen.contenido.length - 1"
             @click="go(+1)"
           >Siguiente</button>
           <button
-            class="button button--green"
+            class="button button--primary-outline"
             v-show="question_idx === this.examen.contenido.length - 1"
             @click="end()"
           >Siguiente</button>
@@ -76,17 +76,17 @@
       <section v-show="show_end" class="exam__end card">
         <p>Ha llegado al final del examen. Puede volver y modificar sus respuestas, o finalizar su participación.</p>
         <button
-          class="button button--blue"
+          class="button button--primary-outline"
           style="margin-right: 10px"
           @click="show_end = false;"
         >Volver</button>
-        <button class="button button--red" @click="dialog_end = true">Finalizar</button>
+        <button class="button button--primary" @click="dialog_end = true">Finalizar</button>
       </section>
     </div>
     <!-- ERROR -->
     <section class="error card" v-show="error_type">
       <p>{{error}}</p>
-      <button class="button button--blue" @click="redirect()">Salir</button>
+      <button class="button button--primary" @click="redirect()">Salir</button>
     </section>
 
     <!-- DIALOG -->
@@ -96,7 +96,7 @@
       >Si finaliza su participación ya no podrá modificar sus respuestas.</p>
       <div class="card__actions">
         <button class="button" @click="dialog_end = false">Cancelar</button>
-        <button class="button button--red" @click="dialog_end = false; finalizarExamen()">Finalizar</button>
+        <button class="button button--primary" @click="dialog_end = false; finalizarExamen()">Finalizar</button>
       </div>
     </m-dialog>
   </div>
@@ -202,6 +202,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "@/styles/color.scss";
+
 .exam {
   max-width: 800px;
   margin: 0 auto;
@@ -260,7 +262,7 @@ export default {
     input[type="radio"] {
       display: none;
       &:checked + span {
-        background: #3a8eff;
+        background: $color-primary;
         color: #fff;
       }
     }
