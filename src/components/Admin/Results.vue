@@ -33,8 +33,8 @@
                 :key="idx"
                 class="center"
                 :class="{
-              'correct': p.respuestas[idx]!= null && p.respuestas[idx] == examen.contenido[idx].correcta,
-              'incorrect': p.respuestas[idx]!= null && p.respuestas[idx] != examen.contenido[idx].correcta
+              'correct': p.respuestas[idx]!= null && p.respuestas[idx] == p.exam_order[idx].indexOf(examen.contenido[idx].correcta),
+              'incorrect': p.respuestas[idx]!= null && p.respuestas[idx] != p.exam_order[idx].indexOf(examen.contenido[idx].correcta),
               }"
               >{{toOption(p.respuestas[idx])|| '-'}}</td>
             </tr>
@@ -76,7 +76,7 @@ export default {
     page_size: 100,
     loading: true
   }),
-  async mounted() {
+  async created() {
     this.examen = await obtenerExamenAdmin();
     this.postulantes = await obtenerPostulantesRespuestas();
     // let postulantes = await obtenerPostulantesRespuestas();
@@ -88,7 +88,8 @@ export default {
     //
     this.postulantes.forEach(p => {
       p.respuestas = p.respuestas || [];
-      p.puntaje = this.getScore(p.respuestas);
+      p.exam_order = p.exam_order || Array(25).fill([]);
+      p.puntaje = this.getScore(p.respuestas, p.exam_order);
     });
     this.loading = false;
   },
@@ -109,11 +110,11 @@ export default {
     toOption(answer) {
       return ["a", "b", "c", "d"][answer];
     },
-    getScore(answers) {
+    getScore(answers, order) {
       let score = 0;
       this.examen.contenido.forEach(({ correcta }, idx) => {
         if (answers[idx] != null) {
-          if (correcta === answers[idx]) score += 4;
+          if (order[idx].indexOf(correcta) === answers[idx]) score += 4;
           else score -= 1;
         }
       });

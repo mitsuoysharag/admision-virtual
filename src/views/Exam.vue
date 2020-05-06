@@ -29,23 +29,17 @@
           <p class="question__question">{{question.pregunta}}</p>
           <hr />
           <div class="question__alternatives">
-            <label
+            <div
               class="question__alternative"
               v-for="(alternative, a_idx) in question.alternativas"
               :key="a_idx"
             >
-              <div class="question__radio">
-                <span>{{alt_arr[a_idx]}})</span>
-                <input
-                  type="radio"
-                  :name="q_idx"
-                  :value="a_idx"
-                  v-model="question.seleccionado"
-                  style="margin: 5px 10px 0 5px"
-                />
-              </div>
-              <span>{{alternative}}</span>
-            </label>
+              <label class="question__radio">
+                <input type="radio" :name="q_idx" :value="a_idx" v-model="question.seleccionado" />
+                <span>{{alt_arr[a_idx]}}</span>
+              </label>
+              <span>{{question.alternativas[examen.exam_order[q_idx][a_idx]]}}</span>
+            </div>
 
             <label class="question__alternative question__alternative--null button">
               <input
@@ -137,6 +131,7 @@ export default {
   async mounted() {
     let respuestas = await obtenerRespuestas();
     this.examen = await obtenerExamen();
+
     if (this.examen.error) {
       this.error_type = this.examen.error;
     } else {
@@ -242,21 +237,33 @@ export default {
     margin-top: 20px;
   }
   &__alternative {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     white-space: pre-wrap;
     // color: #3a3a3a;
     display: flex;
     align-items: flex-start;
-    cursor: pointer;
     &--null {
       margin: 20px auto 0;
       width: min-content;
     }
   }
   &__radio {
-    font-weight: bold;
-    display: flex;
-    align-items: center;
+    span {
+      margin-right: 12px;
+      padding: 4px 8px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      display: none;
+      &:checked + span {
+        background: #3a8eff;
+        color: #fff;
+      }
+    }
   }
   &__action {
     display: block;
