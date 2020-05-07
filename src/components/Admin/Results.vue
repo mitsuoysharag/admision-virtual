@@ -3,6 +3,16 @@
     <Loading :active="loading" />
     <div class="results card">
       <div class="results__actions">
+        <button
+          class="button button--green"
+          style="margin-right: 5px"
+          @click="page_size=100"
+        >Mostrar Menos</button>
+        <button
+          class="button button--green"
+          style="margin-right: 5px"
+          @click="page_size=5000"
+        >Mostrar Todo</button>
         <button class="button button--blue" @click="exportTable()">Exportar</button>
       </div>
       <div class="results__table">

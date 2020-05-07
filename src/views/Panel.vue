@@ -54,11 +54,15 @@ export default {
     loading: true
   }),
   async mounted() {
-    this.profile = await obtenerPerfil();
-    this.examen = await obtenerExamenDatos();
-    if (this.examen) {
-      this.examen.tiempo_inicio = this.dateFormat(this.examen.tiempo_inicio);
-      this.examen.tiempo_fin = this.dateFormat(this.examen.tiempo_fin);
+    try {
+      this.profile = await obtenerPerfil();
+      this.examen = await obtenerExamenDatos();
+      if (this.examen) {
+        this.examen.tiempo_inicio = this.dateFormat(this.examen.tiempo_inicio);
+        this.examen.tiempo_fin = this.dateFormat(this.examen.tiempo_fin);
+      }
+    } catch (e) {
+      this.$root.$children[0].showError();
     }
     this.loading = false;
   },

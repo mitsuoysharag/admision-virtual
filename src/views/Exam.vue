@@ -8,7 +8,7 @@
         <!-- ALERT -->
         <m-alert v-model="show_alert" style="margin-bottom: 20px">
           <span>
-            <i class="fa fa-info-circle" style="margin-right: 8px"></i> Las respuesta seleccionada se guardarán al cambiar de pregunta.
+            <i class="fa fa-info-circle" style="margin-right: 8px"></i> Las respuestas seleccionadas se guardarán al cambiar de pregunta.
           </span>
         </m-alert>
         <!-- SELECT -->
@@ -96,7 +96,10 @@
       >Si finaliza su participación ya no podrá modificar sus respuestas.</p>
       <div class="card__actions">
         <button class="button" @click="dialog_end = false">Cancelar</button>
-        <button class="button button--primary" @click="dialog_end = false; finalizarExamen()">Finalizar</button>
+        <button
+          class="button button--primary"
+          @click="dialog_end = false; finalizarExamen()"
+        >Finalizar</button>
       </div>
     </m-dialog>
   </div>
@@ -129,15 +132,21 @@ export default {
       "Gracias por participar. A partir de 6 pm se enviarán los resultados a su correo."
   }),
   async mounted() {
-    let respuestas = await obtenerRespuestas();
-    this.examen = await obtenerExamen();
+    try {
+      /* eslint-disable */
+      let respuestas = await obtenerRespuestas();
+      this.examen = await obtenerExamen();
 
-    if (this.examen.error) {
-      this.error_type = this.examen.error;
-    } else {
-      this.examen.contenido.forEach((c, idx) => {
-        c.seleccionado = respuestas[idx];
-      });
+      if (this.examen.error) {
+        this.error_type = this.examen.error;
+      } else {
+        this.examen.contenido.forEach((c, idx) => {
+          c.seleccionado = respuestas[idx];
+        });
+      }
+    } catch (e) {
+      this.$root.$children[0].showError();
+      redirect("panel");
     }
     this.loading = false;
   },
@@ -165,9 +174,16 @@ export default {
     async save() {
       this.loading = true;
       let respuestas = this.examen.contenido.map(c => c.seleccionado);
-      let { error } = await ingresarRespuestas(respuestas);
-      if (error) {
-        this.error_type = error;
+
+      try {
+        let { error } = await ingresarRespuestas(respuestas);
+        if (error) {
+          this.error_type = error;
+        }
+      } catch (e) {
+        this.$root.$children[0].showError(
+          "No se pudo guardar el último cambio."
+        );
       }
       this.loading = false;
     },
@@ -177,9 +193,13 @@ export default {
     },
     async finalizarExamen() {
       this.loading = true;
-      await finalizarExamen();
+      try {
+        await finalizarExamen();
+        this.error_type = "end";
+      } catch (e) {
+        this.$root.$children[0].showError();
+      }
       this.loading = false;
-      this.error_type = "end";
     },
     //
     redirect() {

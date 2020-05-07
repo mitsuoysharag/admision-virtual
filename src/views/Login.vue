@@ -13,9 +13,9 @@
         </div>
         <div class="login__body">
           <!-- <span style="max-width: 140px">N° de documento de indentidad:</span> -->
-          <span>Doc. de indentidad:</span>
+          <span>Doc. de identidad:</span>
           <InputText v-model="dni" type="text" />
-          <span>Cód. Postulante:</span>
+          <span>Cód. postulante:</span>
           <InputText v-model="codigo" type="text" />
         </div>
         <div class="login__actions card__actions">
@@ -54,14 +54,18 @@ export default {
       this.error = "";
       if (this.validate()) {
         this.loading = true;
-        let { token, error } = await login(this.dni, this.codigo);
-        this.loading = false;
-        if (error) {
-          this.error = error;
-        } else {
-          setSession(token, 1);
-          redirect("panel");
+        try {
+          let { token, error } = await login(this.dni, this.codigo);
+          if (error) {
+            this.error = error;
+          } else {
+            setSession(token, 1);
+            redirect("panel");
+          }
+        } catch (e) {
+          this.$root.$children[0].showError();
         }
+        this.loading = false;
       } else {
         this.error = "Ingresa todos los datos.";
       }
