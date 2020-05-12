@@ -30,8 +30,7 @@ export default {
 
 <style lang='scss' scoped>
 .header {
-  padding: 10px;
-  padding-left: 0;
+  padding: 6px 10px 6px 0;
   height: 64px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   z-index: 100;
