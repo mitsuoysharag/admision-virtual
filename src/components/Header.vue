@@ -2,7 +2,7 @@
   <header class="header">
     <img
       class="header__logo"
-      src="https://upload.wikimedia.org/wikipedia/commons/4/46/UNMSM_Escudo_y_Nombre.png"
+      src="~@/assets/logo-unmsm.png"
       alt
     />
     <button class="button" @click="logout()">Cerrar Sesión</button>

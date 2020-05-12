@@ -46,7 +46,7 @@
               'correct': p.respuestas[idx]!= null && p.respuestas[idx] == p.exam_order[idx].indexOf(examen.contenido[idx].correcta),
               'incorrect': p.respuestas[idx]!= null && p.respuestas[idx] != p.exam_order[idx].indexOf(examen.contenido[idx].correcta),
               }"
-              >{{toOption(p.respuestas[idx])|| '-'}}</td>
+              >{{`${toOption(p.respuestas[idx])|| '-'}/${toOption(p.exam_order[idx].indexOf(examen.contenido[idx].correcta)) || '-'}`}}</td>
             </tr>
           </tbody>
         </table>
