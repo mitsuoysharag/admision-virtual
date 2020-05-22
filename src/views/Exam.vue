@@ -129,7 +129,7 @@ export default {
     show_alert: true,
     dialog_end: false,
     final_message:
-      "Gracias por participar. A partir de 6 pm se enviarán los resultados a su correo."
+      "Gracias por participar. A partir de 10pm se enviarán los resultados a su correo."
   }),
   async mounted() {
     try {

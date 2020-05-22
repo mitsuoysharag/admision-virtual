@@ -11,7 +11,7 @@
         <button
           class="button button--green"
           style="margin-right: 5px"
-          @click="page_size=5000"
+          @click="page_size=6000"
         >Mostrar Todo</button>
         <button class="button button--blue" @click="exportTable()">Exportar</button>
       </div>
@@ -89,13 +89,7 @@ export default {
   async created() {
     this.examen = await obtenerExamenAdmin();
     this.postulantes = await obtenerPostulantesRespuestas();
-    // let postulantes = await obtenerPostulantesRespuestas();
-    // let postulantes_2 = [];
-    // for (let i = 0; i < Array(1005).length; i++) {
-    //   postulantes_2 = postulantes_2.concat(postulantes);
-    // }
-    // this.postulantes = postulantes_2;
-    //
+
     this.postulantes.forEach(p => {
       p.respuestas = p.respuestas || [];
       p.exam_order = p.exam_order || Array(25).fill([]);
