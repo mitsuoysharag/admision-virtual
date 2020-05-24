@@ -6,13 +6,39 @@
         <img src="~@/assets/logo.png" alt />
       </div>
       <form @submit.prevent="login()">
+        <!-- <div class="msg">
+          <p>
+            <span>Estimado/a postulante: El examen se llevará a cabo hoy 24 de mayo a las 6:00 p.m.</span>
+          </p>
+          <p>
+            <span>Los postulantes que rindieron el examen virtual el día 23 de mayo a las 4:00 p.m, hacer comiso a la comunicación.</span>
+          </p>
+          <p>
+            <span>Si no puede ingresar, por favor, intente omitir los ceros que van delante de su DNI.</span>
+          </p>
+          <p>
+            <span>Si no recuerda su código de postulante, ingrese aquí:</span>
+            <br />
+            <a href="https://bit.ly/cod-p-unmsm">https://bit.ly/cod-p-unmsm</a>
+          </p>
+          <div style="margin-bottom: 16px">
+            <div style="margin-bottom: 8px">Si tiene algún otro inconveniente para ingresar, comuníquese con nosotros:</div>
+            <span>Teléfono: 922536711, 981648674</span>
+            <br />
+            <span>Whatsapp: 957334134</span>
+            <br />
+            <span>
+              Correo:
+              <a href="informatica.dgep@unmsm.edu.pe">informatica.dgep@unmsm.edu.pe</a>
+            </span>
+          </div>
+        </div> -->
         <h1 class="login__title card__title">Iniciar Sesión</h1>
         <div class="error" v-show="error">
           <span>{{error}}</span>
           <i class="fa fa-times" style="cursor: pointer" @click="error = ''"></i>
         </div>
         <div class="login__body">
-          <!-- <span style="max-width: 140px">N° de documento de indentidad:</span> -->
           <span>Doc. de identidad:</span>
           <InputText v-model="dni" type="text" />
           <span>Cód. postulante:</span>
@@ -41,8 +67,6 @@ import { redirect } from "@/services/router";
 
 export default {
   data: () => ({
-    // dni: "76530512",
-    // codigo: "aaa",
     dni: "",
     codigo: "",
     //
@@ -137,6 +161,17 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+@import "@/styles/color.scss";
+.msg {
+  // margin-bottom: 28px;
+  padding: 0 12px;
+  // background: #ffb067;
+  color: $color-primary;
+  font-size: 0.9rem;
+  border: 1px solid $color-primary;
+  font-weight: bold;
 }
 
 .background {

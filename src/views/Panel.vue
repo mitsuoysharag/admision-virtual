@@ -55,8 +55,8 @@ export default {
   }),
   async mounted() {
     try {
-      this.profile = await obtenerPerfil();
-      this.examen = await obtenerExamenDatos();
+      this.profile = await obtenerPerfil() || {};
+      this.examen = await obtenerExamenDatos() || {};
       if (this.examen) {
         this.examen.tiempo_inicio = this.dateFormat(this.examen.tiempo_inicio);
         this.examen.tiempo_fin = this.dateFormat(this.examen.tiempo_fin);

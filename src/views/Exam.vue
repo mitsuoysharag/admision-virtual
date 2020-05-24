@@ -26,7 +26,7 @@
           :key="q_idx"
           v-show="q_idx === question_idx"
         >
-          <p class="question__question">{{question.pregunta}}</p>
+          <p class="question__question" v-html="question.pregunta"></p>
           <hr />
           <div class="question__alternatives">
             <div
@@ -129,7 +129,7 @@ export default {
     show_alert: true,
     dialog_end: false,
     final_message:
-      "Gracias por participar. A partir de 10pm se enviarán los resultados a su correo."
+      "Gracias por participar en el Examen de Admisión de la UNMSM."
   }),
   async mounted() {
     try {

@@ -19,7 +19,7 @@
       <div class="exam__content">
         <section class="question card" v-for="(c, c_idx) in examen.contenido" :key="c_idx">
           <p class="question__number">Pregunta {{c_idx + 1}}</p>
-          <textarea class="question__text" v-model="c.pregunta" rows="6"></textarea>
+          <textarea class="question__text" v-model="c.pregunta" rows="10"></textarea>
           <div class="question__alternative" v-for="(a, a_idx) in c.alternativas" :key="a_idx">
             <input
               type="radio"

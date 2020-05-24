@@ -19,7 +19,6 @@
         <table class="table" id="mytable">
           <thead>
             <tr>
-              <!-- <th>N°</th> -->
               <th>DNI</th>
               <th>Cod. Postulante</th>
               <th>Apellidos y Nombres</th>
@@ -31,8 +30,7 @@
           </thead>
           <tbody>
             <tr v-for="(p, p_idx) in postulantes_page" :key="p_idx">
-              <!-- <td>{{p_idx + 1}}</td> -->
-              <td class="center">{{p.dni}}</td>
+              <td class="center">{{`*${p.dni}`}}</td>
               <td class="center">{{p.codigo_postulante}}</td>
               <td>{{`${p.apellido_paterno} ${p.apellido_materno}, ${p.nombre}`}}</td>
               <td class="center">{{p.codigo_upg}}</td>
